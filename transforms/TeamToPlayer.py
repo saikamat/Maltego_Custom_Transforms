@@ -61,4 +61,5 @@ class TeamToPlayer(DiscoverableTransform):
             player_entity.addProperty(fieldName="position", displayName="Position", value=player_id['position'])
             player_entity.addProperty(fieldName="age", displayName="Age", value=player_id['age'])
             player_entity.addProperty(fieldName="PhotoURL", displayName="Image", value=player_id['photo'])
+            player_entity.addProperty(fieldName="ID", displayName="ID", value=player_id['id'])
         
