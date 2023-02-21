@@ -1,6 +1,6 @@
 from extensions import registry
 from maltego_trx.entities import IPAddress
-from maltego_trx.maltego import UIM_TYPES, MaltegoMsg, MaltegoTransform
+from maltego_trx.maltego import UIM_TYPES, MaltegoMsg, MaltegoTransform, OverlayPosition, OverlayType
 from maltego_trx.transform import DiscoverableTransform
 import requests, os
 from dotenv import load_dotenv
@@ -62,5 +62,15 @@ class TeamToPlayer(DiscoverableTransform):
             player_entity.addProperty(fieldName="URL", displayName="URL", value=player_id['photo'])
             player_entity.addProperty(fieldName="ID", displayName="ID", value=player_id['id'])
             player_entity.setIconURL(url=player_id['photo'])
+            player_entity.addDisplayInformation(content=player_id['number'], title=player_id['position'])
+            player_entity.addProperty('Club Logo', 
+                                      displayName="Club Logo", 
+                                      value="man_utd_logo"  # references an icon in the Maltego client
+            )
+            player_entity.addOverlay('Club Logo', OverlayPosition.SOUTH_WEST, OverlayType.IMAGE)
+            player_entity.addProperty('Player Position', 
+                                      displayName="Player Position", 
+                                      value=player_id['position'])
+            player_entity.addOverlay('Player Position', OverlayPosition.NORTH_WEST, OverlayType.TEXT)
 
         

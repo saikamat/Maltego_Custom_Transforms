@@ -23,7 +23,7 @@ class PlayerToPerformance(DiscoverableTransform):
 
     @classmethod
     def create_entities(cls, request: MaltegoMsg, response: MaltegoTransform): 
-        print(cls.get_player_id(request))
+        # print(cls.get_player_id(request))
         #"""""
         url = "https://api-football-v1.p.rapidapi.com/v3/players"
         
@@ -36,7 +36,7 @@ class PlayerToPerformance(DiscoverableTransform):
 
         api_response = requests.request("GET", url, headers=headers, params=querystring)
         data = api_response.json()
-        # print(data['response'][0]['statistics'][0]['games']['rating'])
+
         rating = data['response'][0]['statistics'][0]['games']['rating']
         if float(rating) > HIGH_SCORE_CRITERION:
             performance_ratings_entity = response.addEntity("yourorganization.AS", rating)
