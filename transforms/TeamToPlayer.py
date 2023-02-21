@@ -20,6 +20,7 @@ class TeamToPlayer(DiscoverableTransform):
     @classmethod
     def get_team_id(cls, request: MaltegoMsg):
         team_name=request.Value
+        print(team_name) #DEBUG
         # API call to get team ID from the name
         url = "https://api-football-v1.p.rapidapi.com/v3/teams"
         querystring = {"name":{team_name}}
@@ -28,11 +29,15 @@ class TeamToPlayer(DiscoverableTransform):
             "X-RapidAPI-Key": os.getenv('api_key'),
             "X-RapidAPI-Host": "api-football-v1.p.rapidapi.com"
         }
-
+      
         api_response = requests.request("GET", url, headers=headers, params=querystring)
         data = api_response.json()
-        team_id=data['response'][0]['team']['id']
-        return team_id
+        print(data) #DEBUG
+        if not (data['response']):
+            print("ERROR: Empty List")
+        else:
+            team_id=data['response'][0]['team']['id']
+            return team_id
 
     @classmethod
     def create_entities(cls, request: MaltegoMsg, response: MaltegoTransform):
