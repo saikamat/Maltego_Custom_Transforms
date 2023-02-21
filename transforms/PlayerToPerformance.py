@@ -15,15 +15,20 @@ def configure():
 configure()
 
 class PlayerToPerformance(DiscoverableTransform):
+    # RETRIEVE SOURCE INFO
 
     @classmethod
-    def create_entities(cls, request: MaltegoMsg, response: MaltegoTransform):
-        # RETRIEVE SOURCE INFO
-        # def get_player_id():
-        # get
-        url = "https://api-football-v1.p.rapidapi.com/v3/players"
+    def get_player_id(cls):
+        player_id=882
+        return player_id
 
-        querystring = {"id":"909","season":"2022"}
+    @classmethod
+    def create_entities(cls, request: MaltegoMsg, response: MaltegoTransform): 
+        print(cls.get_player_id())
+        #"""""
+        url = "https://api-football-v1.p.rapidapi.com/v3/players"
+        
+        querystring = {"id":{cls.get_player_id()},"season":"2022"}
 
         headers = {
             "X-RapidAPI-Key": os.getenv('api_key'),
@@ -36,6 +41,7 @@ class PlayerToPerformance(DiscoverableTransform):
 
         performance_ratings_entity = response.addEntity("yourorganization.AS", data['response'][0]['statistics'][0]['games']['rating'])
         performance_ratings_entity.addProperty(fieldName="rating", displayName="Rating", value=data['response'][0]['statistics'][0]['games']['rating'])
+        #"""""
 
         #****** DELETE THIS CODE LATER. IT'S HERE ONLY TO SAVE THE API CALLS ******
         
