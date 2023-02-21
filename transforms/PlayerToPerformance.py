@@ -18,27 +18,27 @@ class PlayerToPerformance(DiscoverableTransform):
 
     @classmethod
     def create_entities(cls, request: MaltegoMsg, response: MaltegoTransform):
-        url = "https://api-football-v1.p.rapidapi.com/v3/players"
+        # url = "https://api-football-v1.p.rapidapi.com/v3/players"
 
-        querystring = {"id":"909","season":"2022"}
+        # querystring = {"id":"909","season":"2022"}
 
-        headers = {
-            "X-RapidAPI-Key": os.getenv('api_key'),
-            "X-RapidAPI-Host": "api-football-v1.p.rapidapi.com"
-        }
+        # headers = {
+        #     "X-RapidAPI-Key": os.getenv('api_key'),
+        #     "X-RapidAPI-Host": "api-football-v1.p.rapidapi.com"
+        # }
 
-        response = requests.request("GET", url, headers=headers, params=querystring)
-        data = response.json()
+        # response = requests.request("GET", url, headers=headers, params=querystring)
+        # data = response.json()
         #****** DELETE THIS CODE LATER. IT'S HERE ONLY TO SAVE THE API CALLS ******
         
         #Open a file and write the dictionary to it in JSON format
-        with open('data/player_performance.json', 'w') as f:
-            json.dump(data, f)
+        # with open('data/player_performance.json', 'w') as f:
+        #     json.dump(data, f)
         
-        # # Close the file
-        f.close()
+        # # # Close the file
+        # f.close()
 
-        # with open('data/2_PLAYER_PERFORMANCE_BKUP.json', 'r') as f:
-        #     data = json.load(f)
+        with open('data/2_PLAYER_PERFORMANCE_BKUP.json', 'r') as f:
+            data = json.load(f)
         #****** UNTIL HERE ******
         print(data)
