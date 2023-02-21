@@ -33,14 +33,13 @@ class TeamToPlayer(DiscoverableTransform):
         api_response = requests.request("GET", url, headers=headers, params=querystring)
         data = api_response.json()
         # print(data) #DEBUG
-        try:
-            if not (data['response']):
-                print("ERROR: Incorrect Input Entity Name")
-            else:
-                team_id=data['response'][0]['team']['id']
-                return team_id
-        except Exception:
-            raise Exception("Sorry!!") 
+        
+        if not (data['response']):
+            raise Exception("INPUT ERROR: Incorrect Input Entity Name")
+        else:
+            team_id=data['response'][0]['team']['id']
+            return team_id
+        
 
     @classmethod
     def create_entities(cls, request: MaltegoMsg, response: MaltegoTransform):
