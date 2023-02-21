@@ -18,17 +18,17 @@ class PlayerToPerformance(DiscoverableTransform):
     # RETRIEVE SOURCE INFO
 
     @classmethod
-    def get_player_id(cls):
-        player_id=882
+    def get_player_id(cls, request: MaltegoMsg):
+        player_id=request.getProperty("ID")
         return player_id
 
     @classmethod
     def create_entities(cls, request: MaltegoMsg, response: MaltegoTransform): 
-        print(cls.get_player_id())
+        print(cls.get_player_id(request))
         #"""""
         url = "https://api-football-v1.p.rapidapi.com/v3/players"
         
-        querystring = {"id":{cls.get_player_id()},"season":"2022"}
+        querystring = {"id":{cls.get_player_id(request)},"season":"2022"}
 
         headers = {
             "X-RapidAPI-Key": os.getenv('api_key'),
