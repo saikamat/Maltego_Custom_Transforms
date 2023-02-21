@@ -18,17 +18,25 @@ class PlayerToPerformance(DiscoverableTransform):
 
     @classmethod
     def create_entities(cls, request: MaltegoMsg, response: MaltegoTransform):
-        # url = "https://api-football-v1.p.rapidapi.com/v3/players"
+        # RETRIEVE SOURCE INFO
+        # def get_player_id():
+        # get
+        url = "https://api-football-v1.p.rapidapi.com/v3/players"
 
-        # querystring = {"id":"909","season":"2022"}
+        querystring = {"id":"909","season":"2022"}
 
-        # headers = {
-        #     "X-RapidAPI-Key": os.getenv('api_key'),
-        #     "X-RapidAPI-Host": "api-football-v1.p.rapidapi.com"
-        # }
+        headers = {
+            "X-RapidAPI-Key": os.getenv('api_key'),
+            "X-RapidAPI-Host": "api-football-v1.p.rapidapi.com"
+        }
 
-        # response = requests.request("GET", url, headers=headers, params=querystring)
-        # data = response.json()
+        api_response = requests.request("GET", url, headers=headers, params=querystring)
+        data = api_response.json()
+        print(data['response'][0]['statistics'][0]['games']['rating'])
+
+        performance_ratings_entity = response.addEntity("yourorganization.AS", data['response'][0]['statistics'][0]['games']['rating'])
+        performance_ratings_entity.addProperty(fieldName="rating", displayName="Rating", value=data['response'][0]['statistics'][0]['games']['rating'])
+
         #****** DELETE THIS CODE LATER. IT'S HERE ONLY TO SAVE THE API CALLS ******
         
         #Open a file and write the dictionary to it in JSON format
@@ -38,7 +46,7 @@ class PlayerToPerformance(DiscoverableTransform):
         # # # Close the file
         # f.close()
 
-        with open('data/2_PLAYER_PERFORMANCE_BKUP.json', 'r') as f:
-            data = json.load(f)
+        # with open('data/2_PLAYER_PERFORMANCE_BKUP.json', 'r') as f:
+            # data = json.load(f)
         #****** UNTIL HERE ******
-        print(data)
+        # print(data)
