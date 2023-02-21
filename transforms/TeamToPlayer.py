@@ -2,7 +2,7 @@ from extensions import registry
 from maltego_trx.entities import IPAddress
 from maltego_trx.maltego import UIM_TYPES, MaltegoMsg, MaltegoTransform
 from maltego_trx.transform import DiscoverableTransform
-import requests, os, json
+import requests, os
 from dotenv import load_dotenv
 
 

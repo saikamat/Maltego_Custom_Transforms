@@ -2,7 +2,7 @@ from extensions import registry
 from maltego_trx.entities import IPAddress
 from maltego_trx.maltego import UIM_TYPES, MaltegoMsg, MaltegoTransform
 from maltego_trx.transform import DiscoverableTransform
-import requests, os, json
+import requests, os
 from dotenv import load_dotenv
 
 @registry.register_transform(display_name="Player to Performance", input_entity="maltego.Person",
@@ -13,10 +13,9 @@ def configure():
     load_dotenv()
 
 configure()
-
+HIGH_SCORE_CRITERION = 6.5
 class PlayerToPerformance(DiscoverableTransform):
     # RETRIEVE SOURCE INFO
-
     @classmethod
     def get_player_id(cls, request: MaltegoMsg):
         player_id=request.getProperty("ID")
@@ -37,22 +36,8 @@ class PlayerToPerformance(DiscoverableTransform):
 
         api_response = requests.request("GET", url, headers=headers, params=querystring)
         data = api_response.json()
-        print(data['response'][0]['statistics'][0]['games']['rating'])
-
-        performance_ratings_entity = response.addEntity("yourorganization.AS", data['response'][0]['statistics'][0]['games']['rating'])
-        performance_ratings_entity.addProperty(fieldName="rating", displayName="Rating", value=data['response'][0]['statistics'][0]['games']['rating'])
-        #"""""
-
-        #****** DELETE THIS CODE LATER. IT'S HERE ONLY TO SAVE THE API CALLS ******
-        
-        #Open a file and write the dictionary to it in JSON format
-        # with open('data/player_performance.json', 'w') as f:
-        #     json.dump(data, f)
-        
-        # # # Close the file
-        # f.close()
-
-        # with open('data/2_PLAYER_PERFORMANCE_BKUP.json', 'r') as f:
-            # data = json.load(f)
-        #****** UNTIL HERE ******
-        # print(data)
+        # print(data['response'][0]['statistics'][0]['games']['rating'])
+        rating = data['response'][0]['statistics'][0]['games']['rating']
+        if float(rating) > HIGH_SCORE_CRITERION:
+            performance_ratings_entity = response.addEntity("yourorganization.AS", rating)
+            performance_ratings_entity.addProperty(fieldName="rating", displayName="Rating", value=rating)
