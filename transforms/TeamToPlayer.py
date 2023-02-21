@@ -19,33 +19,42 @@ class TeamToPlayer(DiscoverableTransform):
 
     @classmethod
     def create_entities(cls, request: MaltegoMsg, response: MaltegoTransform):
-        # url = "https://api-football-v1.p.rapidapi.com/v3/players/squads"
+        #"""""
+        url = "https://api-football-v1.p.rapidapi.com/v3/players/squads"
 
-        # querystring = {"team":"33"}
+        querystring = {"team":"33"}
 
-        # headers = {
-        #     "X-RapidAPI-Key": os.getenv('api_key'),
-        #     "X-RapidAPI-Host": "api-football-v1.p.rapidapi.com"
-        # }
+        headers = {
+            "X-RapidAPI-Key": os.getenv('api_key'),
+            "X-RapidAPI-Host": "api-football-v1.p.rapidapi.com"
+        }
 
-        # response = requests.request("GET", url, headers=headers, params=querystring)
-        # data = response.json()
+        api_response = requests.request("GET", url, headers=headers, params=querystring)
+        data = api_response.json()
+        """""
         # #****** DELETE THIS CODE LATER. IT'S HERE ONLY TO SAVE THE API CALLS ******
         # # Open a file and write the dictionary to it in JSON format
         # with open('data/team_squads.json', 'w') as f:
         #     json.dump(data, f)
         
-        # # # Close the file
+        # # # # Close the file
         # f.close()
+        print(data)
 
-        with open('data/1_PLAYER_SQ_BKUP.json', 'r') as f:
+        
+        with open('data/team_squads.json', 'r') as f:
             data = json.load(f)
         #****** UNTIL HERE ******
         # print(data['response'][0]['team']['name'])
 
         # Obtain information from source entity
-        teamName=data['response'][0]['team']['name']
-
+        # teamName=data['response'][0]['team']['name']
+        # print(teamName)
+        # print(data['response'][0]['players'])
+        
+        # print('*****RESPONSE.JSON')
+        # print(response1.json())
+        """""
         for player_id in data['response'][0]['players']:
         # Create Player Entity and add properties
             player_entity = response.addEntity("yourorganization.Player", player_id['name'])
