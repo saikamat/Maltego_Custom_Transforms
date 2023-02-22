@@ -56,7 +56,7 @@ class TeamToPlayer(DiscoverableTransform):
                 
         for player_id in data['response'][0]['players']:
         # Create Player Entity and add properties
-            player_entity = response.addEntity("yourorganization.Player", player_id['name'])
+            player_entity = response.addEntity("maltego.Person", player_id['name'])
             player_entity.addProperty(fieldName="position", displayName="Position", value=player_id['position'])
             player_entity.addProperty(fieldName="age", displayName="Age", value=player_id['age'])
             player_entity.addProperty(fieldName="URL", displayName="URL", value=player_id['photo'])

@@ -5,7 +5,7 @@ from maltego_trx.transform import DiscoverableTransform
 import requests, os
 from dotenv import load_dotenv
 
-@registry.register_transform(display_name="Player to Performance", input_entity="maltego.Person",
+@registry.register_transform(display_name="Player to Rating", input_entity="maltego.Person",
                              description='Receive name of a player, and show if he scored more than 10 goals',
                              output_entities=["maltego.AS"])
 
@@ -38,6 +38,7 @@ class PlayerToPerformance(DiscoverableTransform):
         data = api_response.json()
 
         rating = data['response'][0]['statistics'][0]['games']['rating']
+
         if float(rating) > HIGH_SCORE_CRITERION:
             performance_ratings_entity = response.addEntity("yourorganization.AS", rating)
             performance_ratings_entity.addProperty(fieldName="rating", displayName="Rating", value=rating)
