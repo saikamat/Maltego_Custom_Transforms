@@ -42,3 +42,4 @@ class PlayerToPerformance(DiscoverableTransform):
         if float(rating) > HIGH_SCORE_CRITERION:
             performance_ratings_entity = response.addEntity("yourorganization.AS", rating)
             performance_ratings_entity.addProperty(fieldName="rating", displayName="Rating", value=rating)
+            performance_ratings_entity.setIconURL(url="https://cdn-icons-png.flaticon.com/128/2107/2107957.png")
